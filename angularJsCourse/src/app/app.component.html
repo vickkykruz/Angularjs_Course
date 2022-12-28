@@ -1,8 +1,18 @@
-<h1>Hello I'm Victor</h1>
+<h1 class="text-center">Learing Angular Js Course.</h1>
 
 <!-- To display the rooms Component -->
-<app-rooms></app-rooms>
- <!-- Eg here: We want to design a login system that will not display if i'm a user then display if i'm an admin --> -->
+<!-- <app-rooms></app-rooms> -->
+
+<!-- To display the ng-container -->
+<app-container>
+  <app-rooms></app-rooms>
+  <app-employee></app-employee>
+  <h1>This is from ng-content</h1>
+  <!-- Using this scenario we can pass DOM element into the component -->
+</app-container>
+<!-- To get access to the Element -->
+<div #name></div>
+ <!-- Eg here: We want to design a login system that will not display if i'm a user then display if i'm an admin -->
 
  <!-- <div [ngSwitch]="role">
   <div *ngSwitchCase="'User'">
@@ -16,3 +26,9 @@
     <h5>You are not authorize to view this page</h5>
   </div>
 </div> -->
+
+<!-- Ng Template => it is a tag which will nwver render anything(i.e it's not viewable ), but its us to render some other
+  template(eg component) Let's try it out-->
+  <!-- <div>
+    <ng-template #user></ng-template>
+  </div> -->

@@ -1,0 +1,45 @@
+<h4>{{ title }}</h4>
+<!-- {{ roomList | json }} -->
+<!-- This should be used for debugging not for production -->
+<!-- How to display Array Elemts -->
+<table class="table">
+  <thead>
+    <th>Index Of Item</th>
+    <th>Even/Odd</th>
+    <th>Room Number (#)</th>
+    <th>Room Type</th>
+    <th>Room Price</th>
+    <th>Room Amenities</th>
+    <th>Checkin Time</th>
+    <th>Rating</th>
+    <th>Selected Rooms</th>
+  </thead>
+  <!-- How to apply built-in pipe -->
+  <tbody>
+    <!-- To fine the event NO and Odd No. we say -->
+    <!-- To get the index => we say -->
+    <!-- [ngClass]="e ? 'even': 'odd'" => Use of Ng-Class -->
+    <!-- Splice method limit from 0 to a particular number of record -->
+    <!-- | slice : 0:3 -->
+    <tr   *ngFor="let room of rooms ; let e = even; let o = odd; let i = index">
+      <!-- To display percentage value -->
+      <td>{{ i | percent}}</td>
+      <td>{{ e? "Event" : "Odd" }}</td>
+      <td>{{ room.roomNumber }}</td>
+      <td>{{ room.roomType }}</td>
+      <td>{{  room.price  | currency : 'NGN' }}</td>
+      <td>{{ room.amenities | titlecase }}</td>
+      <!-- <td>{{ room.amenities | uppercase }}</td> -->
+      <!-- <td>{{ room.amenities | lowercase }}</td> -->
+      <td>{{ room.checkInTime | date : 'full' }}</td>
+      <!-- To get a whole No decleare number : ' 1.0-0'
+        Then for a run no we declear the min value and max value
+        Eg 2.456 : '1.1-1 => 2.5' || 2.456 : '1.1-2' => 2.45
+      -->
+      <td>{{ room.rating | number : '1.1-3' : 'en-us' }}</td>
+      <td>
+        <button class="btn btn-primary" (click)="selectRoom(room)" >Select</button>
+      </td>
+    </tr>
+  </tbody>
+</table>

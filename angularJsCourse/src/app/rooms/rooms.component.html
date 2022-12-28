@@ -1,58 +1,47 @@
-<!-- Interpolation Binding: Eg -->
-<h1>Welcome To {{ hostelName }}</h1>
+<div class="container">
+  <!-- Interpolation Binding: Eg -->
+  <!-- <h1 class="text-center">Welcome To {{ hostelName }}</h1> -->
+  <app-header></app-header>
+  <input type="text" name="" class="form-control" id="">
 
-<!-- Property Binding => This is used in any vaild html property: Eg -->
-<!-- <div [innerText]="numberOfRooms"></div> -->
-<!--
-  [innerText] is a property that is bond the value.
-  Just like documents.getElementById.innerText() -->
+  <h5>Your Username is {{ username }}</h5>
+  <!-- Property Binding => This is used in any vaild html property: Eg -->
+  <!-- <div [innerText]="numberOfRooms"></div> -->
+  <!--
+    [innerText] is a property that is bond the value.
+    Just like documents.getElementById.innerText() -->
 
-  <!-- How to collect information:
-  Event Binding -->
+    <!-- How to collect information:
+    Event Binding -->
 
-  <div class="" [hidden]="hideRoom">
-    <h6>Number Of Rooms</h6>
-    <div [innerText]="numberOfRooms"></div>
-  </div>
+    <div class="" [hidden]="hideRoom">
+      <h6>Number Of Rooms</h6>
+      <div [ngStyle]="{'color': rooms.availableRooms > 0 ? 'green' : 'red'}" [innerText]="numberOfRooms"></div>
+    </div>
 
-  <!-- Using Directive: Built in -->
-  <!-- Type : => Sturcture && Attibute  -->
-  <!-- Sturectur Directive modify the DOM eg 8ngIf, *ngFor & *ngSwitch-->
-  <!-- Attrbute Directive they can modify the DOM but can't add or remove elements-->
-  {{ rooms.availableRooms ?? 'No Rooms' }}
-  <!-- This expreesion meand that if the is no value display `No Rooms` -->
-  <!-- ng-if -->
-  <!-- <div class="" *ngIf="rooms?.availableRooms">
-    <p>Room List</p>
-  </div> -->
+    <!-- Using Directive: Built in -->
+    <!-- Type : => Sturcture && Attibute  -->
+    <!-- Sturectur Directive modify the DOM eg 8ngIf, *ngFor & *ngSwitch-->
+    <!-- Attrbute Directive they can modify the DOM but can't add or remove elements-->
+    <!-- {{ rooms.availableRooms ?? 'No Rooms' }} -->
+    <!-- This expreesion meand that if the is no value display `No Rooms` -->
+    <!-- ng-if -->
+    <!-- <div class="" *ngIf="rooms?.availableRooms">
+      <p>Room List</p>
+    </div> -->
 
-  <div class="" *ngIf="rooms.availableRooms > 0">
-    <p>Room List</p>
-    <!-- How to display Array Elemts -->
-    <table>
-      <thead>
-        <th>Index Of Item</th>
-        <th>Even/Odd</th>
-        <th>Room Number (#)</th>
-        <th>Room Type</th>
-        <th>Room Price</th>
-        <th>Room Amenities</th>
-        <th>Checkin Time</th>
-      </thead>
-      <tbody>
-        <!-- To fine the event NO and Odd No. we say -->
-        <!-- To get the index => we say -->
+    <div class="" *ngIf="selectedRoom">
+      {{ selectedRoom | json}}
+    </div>
 
-        <tr *ngFor="let room of roomList; let e = even; let o = odd; let i = index">
-          <td>{{ i }}</td>
-          <td>{{ e? "Event" : "Odd" }}</td>
-          <td>{{ room.roomNumber }}</td>
-          <td>{{ room.roomType }}</td>
-          <td>{{ room.price }}</td>
-          <td>{{ room.amenities }}</td>
-          <td>{{ room.checkInTime }}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  <button (click)="toogle()">Toogle</button>
+    <button (click)="addRoom()">Add Item</button>
+
+    <!-- Bisng the Input and Output Function -->
+    <!-- <div class="" *ngIf="rooms.availableRooms > 0">
+      <app-rooms-list [rooms]="roomList" [title]="title" (selectedRoom)="selectRoom($event)"></app-rooms-list>
+    </div> -->
+    <div class="" *ngIf="hideRoom">
+      <app-rooms-list [rooms]="roomList" [title]="title" (selectedRoom)="selectRoom($event)"></app-rooms-list>
+    </div>
+    <button (click)="toogle()">Toogle</button>
+</div>
