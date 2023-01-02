@@ -1,4 +1,5 @@
 import { AfterContentInit, AfterViewInit, Component, DoCheck, OnInit, QueryList, SkipSelf, ViewChild, ViewChildren } from '@angular/core';
+import { Observable } from 'rxjs';
 import { HeaderComponent } from '../header/header.component';
 import { RoomList, Rooms } from './rooms';
 import { RoomsService } from './services/rooms.service';
@@ -26,6 +27,16 @@ export class RoomsComponent implements OnInit ,DoCheck, AfterContentInit, AfterV
 
   // While the ViewChildren is used to asscess mutiple instances
   @ViewChildren(HeaderComponent) headerChildrenComponent!: QueryList<HeaderComponent>;
+
+  // Creating an observable using Rxjs
+  stream = new Observable(observer => {
+    observer.next('User1');
+    observer.next('User2');
+    observer.next('User3');
+
+    observer.complete();
+    observer.error('error');
+  })
   ngDoCheck(): void {
     console.log('On Changes is called');
   }
@@ -59,6 +70,26 @@ export class RoomsComponent implements OnInit ,DoCheck, AfterContentInit, AfterV
     //Add 'implements OnInit' to the class.
     console.log(this.headerComponent);
     this.roomList  = this.roomsService.getRooms();
+
+    // To inovice the sream observables
+    // this.stream.subscribe((data)=> { // You can call it mutiple times
+    //   console.log(data);
+    // })
+    // Another ay to involue the stream
+    this.stream.subscribe({
+      next: (value) => console.log(value),
+      complete: () => console.log('complete'),
+      error: (err) => console.log(err)
+    })
+
+    this.stream.subscribe((data)=> { // You can call it mutiple times
+        console.log(data);
+      })
+
+    // Using http from the service room => Get Request
+    // this.roomsService.getRooms().subscribe(rooms => {
+    //   this.roomList = rooms;
+    // });
   }
 
   numberOfRooms = 10; // Property Binding
@@ -79,7 +110,7 @@ export class RoomsComponent implements OnInit ,DoCheck, AfterContentInit, AfterV
 
  addRoom() {
   const room: RoomList = {
-    roomNumber: 4,
+    roomNumber: '4',
     roomType: "Sitting Room",
     amenities: "Televsion, Fan Chairs",
     price: 2000,
@@ -92,4 +123,7 @@ export class RoomsComponent implements OnInit ,DoCheck, AfterContentInit, AfterV
   // this.roomList.push(room);
   this.roomList = [...this.roomList, room];
  }
+
+//  getData -> addDate -> getDate
+//  getData -> continous stream of Data -> addData // so whenever we update the stream we get the lastest data
 }

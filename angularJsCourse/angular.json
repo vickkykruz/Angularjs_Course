@@ -63,12 +63,14 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+
           "configurations": {
             "production": {
               "browserTarget": "angularJsCourse:build:production"
             },
             "development": {
-              "browserTarget": "angularJsCourse:build:development"
+              "browserTarget": "angularJsCourse:build:development",
+              "proxyConfig": "src/proxy.conf.json"
             }
           },
           "defaultConfiguration": "development"
