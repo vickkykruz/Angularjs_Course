@@ -12,7 +12,7 @@ export class RoomsListComponent implements OnChanges, OnDestroy{
   // Use of @Input and @Output
   // Input function is used to render data from the parent component to the child componet
   // Because a the stage it asked the data from the parent
-  @Input()rooms: RoomList[] = [];
+  @Input()rooms: RoomList[] | null = [];
 
 
   // Output functions psses data/request from child component to the parent component

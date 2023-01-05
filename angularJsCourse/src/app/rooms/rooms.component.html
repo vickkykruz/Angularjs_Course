@@ -14,6 +14,9 @@
     <!-- How to collect information:
     Event Binding -->
 
+    <!-- rxjs stream uses of async -->
+    <!-- When u want to display stream u use the the async -->
+    {{ rooms$ | async | json }}
     <div class="" [hidden]="hideRoom">
       <h6>Number Of Rooms</h6>
       <div [ngStyle]="{'color': rooms.availableRooms > 0 ? 'green' : 'red'}" [innerText]="numberOfRooms"></div>
@@ -36,12 +39,21 @@
 
     <button (click)="addRoom()">Add Item</button>
 
+    <!-- To display the error -->
+    <h2>{{ getError$ | async }} <br> <span class="text-right">Number Of Rooms Count: {{ roomsCount$ | async }}</span></h2> 
     <!-- Bisng the Input and Output Function -->
     <!-- <div class="" *ngIf="rooms.availableRooms > 0">
       <app-rooms-list [rooms]="roomList" [title]="title" (selectedRoom)="selectRoom($event)"></app-rooms-list>
     </div> -->
-    <div class="" *ngIf="hideRoom">
-      <app-rooms-list [rooms]="roomList" [title]="title" (selectedRoom)="selectRoom($event)"></app-rooms-list>
+    <!-- <div class="" *ngIf="hideRoom"> -->
+      <div class="" *ngIf="rooms$ | async as rooms"> 
+        <!-- // This is avoid calling muliple stream pipes -->
+      <app-rooms-list [rooms]="rooms" [title]="title" (selectedRoom)="selectRoom($event)"></app-rooms-list>
     </div>
     <button (click)="toogle()">Toogle</button>
+    <button (click)="editRoom()">Edit Room</button>
+    <button (click)="deleteRoom()">Delete Room</button>
+
+    <!-- Http Request to diplay the totalbytes of the API -->
+    <h1>{{ totalBytes }} loaded</h1>
 </div>

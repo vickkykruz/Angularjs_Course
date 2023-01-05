@@ -1,5 +1,6 @@
+import { HttpEventType } from '@angular/common/http';
 import { AfterContentInit, AfterViewInit, Component, DoCheck, OnInit, QueryList, SkipSelf, ViewChild, ViewChildren } from '@angular/core';
-import { Observable } from 'rxjs';
+import { catchError, map, Observable, of, Subject, Subscription } from 'rxjs';
 import { HeaderComponent } from '../header/header.component';
 import { RoomList, Rooms } from './rooms';
 import { RoomsService } from './services/rooms.service';
@@ -15,7 +16,7 @@ export class RoomsComponent implements OnInit ,DoCheck, AfterContentInit, AfterV
 
   // Using ng-model
   username: string = 'Victor';
-  hideRoom = false;
+  hideRoom = true;
   rooms : Rooms = {
     totalRooms: 20,
     availableRooms: 10,
@@ -36,7 +37,7 @@ export class RoomsComponent implements OnInit ,DoCheck, AfterContentInit, AfterV
 
     observer.complete();
     observer.error('error');
-  })
+  });
   ngDoCheck(): void {
     console.log('On Changes is called');
   }
@@ -61,6 +62,39 @@ export class RoomsComponent implements OnInit ,DoCheck, AfterContentInit, AfterV
   // Using Depences Injection to inject the services => We Say
   // To declear the roomList
   roomList: RoomList[] = [];
+  // Declear totalbyes
+  totalBytes = 0;
+
+  // Stream Pipes
+  //  Now to avoid subscript => and i want to do this manually
+  subscription !: Subscription;
+
+  // Use of rxjs ShareReply on the component
+  // rooms$ = this.roomsService.getRooms$ // This another way to display result without subscribe to it
+
+  // So how to handle error in rxjs => catchError
+  /* Note: We can't modifty a stream after subscribing to it but can be modified using pipe
+    Don't write this code inside your component. it should be done inside service.ts
+  */
+  // How to fetech the error property one by one
+  // !: => this stands for not intialize
+  // error$ : Subject<string>;
+  error$ = new Subject<string>();
+
+  getError$ = this.error$.asObservable(); // Using this we are subscribe the error to display to the font-end
+  rooms$ = this.roomsService.getRooms$.pipe(
+    catchError((err) => {
+      // console.log(err.message);
+      this.error$.next(err.message);
+      return of([]);
+    })
+  );
+
+  // How to modify a stream using map operators
+  roomsCount$ = this.roomsService.getRooms$.pipe(
+    // Using map operator
+    map((rooms) => rooms.length)
+  )
   // Using SkipSelf we're saying that the angular shuld skip check of this RoomService provider
   constructor(@SkipSelf() private roomsService: RoomsService) {}
 
@@ -69,9 +103,14 @@ export class RoomsComponent implements OnInit ,DoCheck, AfterContentInit, AfterV
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
     console.log(this.headerComponent);
-    this.roomList  = this.roomsService.getRooms();
+    // this.roomList  = this.roomsService.getRooms();
 
     // To inovice the sream observables
+    // this.stream.subscribe((data)=> { // You can call it mutiple times
+    //   console.log(data);
+    // })
+    // Let call it again
+
     // this.stream.subscribe((data)=> { // You can call it mutiple times
     //   console.log(data);
     // })
@@ -82,14 +121,46 @@ export class RoomsComponent implements OnInit ,DoCheck, AfterContentInit, AfterV
       error: (err) => console.log(err)
     })
 
-    this.stream.subscribe((data)=> { // You can call it mutiple times
-        console.log(data);
-      })
 
-    // Using http from the service room => Get Request
+    // Using http from the service room => Get/ Read Request
     // this.roomsService.getRooms().subscribe(rooms => {
     //   this.roomList = rooms;
     // });
+
+    // Intanse of call it as http you can call it as a stream
+    // this.subscription = this.roomsService.getRooms$.subscribe(rooms => {
+    //   this.roomList = rooms;
+    // });
+
+
+    // To invoice the http request
+    this.roomsService.getPhotos().subscribe((event)=> {
+      // console.log(room);
+      switch (event.type) {
+        case HttpEventType.Sent: {
+          console.log("Request has been made...");
+          break;
+        }
+
+        case HttpEventType.ResponseHeader: {
+          console.log("Request success");
+          break;
+        }
+
+        case HttpEventType.DownloadProgress: {
+          this.totalBytes+= event.loaded;
+          break;
+        }
+
+        case HttpEventType.Response: {
+          console.log(event.body);
+          break;
+        }
+
+        default:
+          break;
+      }
+    })
   }
 
   numberOfRooms = 10; // Property Binding
@@ -109,6 +180,7 @@ export class RoomsComponent implements OnInit ,DoCheck, AfterContentInit, AfterV
  }
 
  addRoom() {
+  //  Declear it
   const room: RoomList = {
     roomNumber: '4',
     roomType: "Sitting Room",
@@ -120,9 +192,52 @@ export class RoomsComponent implements OnInit ,DoCheck, AfterContentInit, AfterV
     rating: 4.9
   }
 
+  // To add the room
   // this.roomList.push(room);
-  this.roomList = [...this.roomList, room];
+  // this.roomList = [...this.roomList, room];
+
+  // Add the room using http request
+  this.roomsService.addRooms(room).subscribe((data) => {
+    this.roomList = data
+  })
  }
+
+//  Edit Room
+editRoom() {
+  // Declear the data
+  const room: RoomList = {
+    roomNumber: '3',
+    roomType: "Sitting Room",
+    amenities: "Televsion, Fan Chairs",
+    price: 2000,
+    photo: "Sitting logo",
+    checkInTime: new Date('25-Dec-2022'),
+    checkOutTime: new Date('26-Dec-2022'),
+    rating: 4.9
+  }
+
+  // To invoice or call this
+  this.roomsService.editRoom(room).subscribe((data) => {
+    this.roomList = data;
+  })
+
+}
+
+// Delete http
+deleteRoom() {
+  this.roomsService.delete('3').subscribe((data) => {
+    this.roomList = data;
+  })
+}
+
+ngOnDestroy(): void { //it means whenevr this component get destory it go ahead an destroy the subscription
+  //Called once, before the instance is destroyed.
+  //Add 'implements OnDestroy' to the class.
+  
+  if(this.subscription){ // This means if there any active subscription it should go ahead an unsubscribe
+    this.subscription.unsubscribe();
+  } 
+}
 
 //  getData -> addDate -> getDate
 //  getData -> continous stream of Data -> addData // so whenever we update the stream we get the lastest data
