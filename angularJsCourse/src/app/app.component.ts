@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, ElementRef, Inject, OnInit, Optional, ViewChild, ViewContainerRef } from '@angular/core';
+import { InitService } from './init.service';
 import { localStorageToken } from './localstorage.token';
 import { LoggerService } from './logger.service';
 import { RoomsComponent } from './rooms/rooms.component';
@@ -30,10 +31,13 @@ export class AppComponent implements OnInit, AfterViewInit {
   // Using the Optional decorator we restrict the Loggerervice Provider in the view.
   // Assume ther is an error in the LoggerService Provider, it restrict the error from being display in the view
   // To inject localstorage localStorage: any can be used if there is any error
+  // To see if the APP_Initialer is available (display). We need to inject it
   constructor(@Optional() private loggerService: LoggerService,
-  @Inject(localStorageToken) private localStorage: Storage) {} // To uses seassionStorage change or create an injjectio lyk dis
+  @Inject(localStorageToken) private localStorage: Storage,
+  private initService: InitService) {} // To uses seassionStorage change or create an injjectio lyk dis
 
   ngOnInit(): void {
+    console.log(this.initService.config);
     this.loggerService?.log('AppComponent.ngOnInit()');
     this.name.nativeElement.innerText = "VickkyBoi Hotel";
     // To add Something to localstorage

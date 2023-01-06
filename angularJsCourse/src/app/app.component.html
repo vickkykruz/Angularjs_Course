@@ -4,14 +4,14 @@
 <!-- <app-rooms></app-rooms> -->
 
 <!-- To display the ng-container -->
-<app-container>
+<!-- <app-container>
   <app-rooms></app-rooms>
   <app-employee></app-employee>
-  <h1>This is from ng-content</h1>
+  <h1>This is from ng-content</h1> -->
   <!-- Using this scenario we can pass DOM element into the component -->
-</app-container>
+<!-- </app-container> -->
 <!-- To get access to the Element -->
-<div #name></div>
+<!-- <div #name></div> -->
  <!-- Eg here: We want to design a login system that will not display if i'm a user then display if i'm an admin -->
 
  <!-- <div [ngSwitch]="role">
@@ -32,3 +32,11 @@
   <!-- <div>
     <ng-template #user></ng-template>
   </div> -->
+
+  <!-- Using anoch tad to display link -->
+  <!-- It advise you don'y use [href] because it reload, the best way is [routeLink] we don't reload -->
+  <a [routerLink]="['/rooms']" routerLinkActive="router-link-active" >Rooms</a>
+  <a [routerLink]="['/employee']" routerLinkActive="router-link-active" >Employee</a>
+  <!-- The ng-router-outlet is used to display the route -->
+  <router-outlet></router-outlet>
+  

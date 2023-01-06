@@ -1,4 +1,4 @@
-import { HttpClient, HttpRequest } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpRequest } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { shareReplay } from 'rxjs';
 import { ApiConfig } from 'src/app/ApiConfig/apiconfig.interface';
@@ -49,6 +49,18 @@ export class RoomsService {
   
   // Uses of Rxjs Operation 
   // ShareReplay
+  // Hoe to create http header
+  // headers = new HttpHeaders({
+  //   'token': '123456789'
+  // });
+  // To add the header inside the api
+  // getRooms$ = this.http.get<RoomList[]>('api/v1/rooms', {
+  //   headers: this.headers
+  // }).pipe(
+  //   shareReplay(1)
+  // )
+
+  // Using http interceptor
   getRooms$ = this.http.get<RoomList[]>('api/v1/rooms').pipe(
     shareReplay(1)
   )
@@ -67,7 +79,10 @@ export class RoomsService {
 
     // return this.roomList;
      // Get Method is Read
-    // return this.http.get<RoomList[]>('/src/app/rooms')
+    //  How to create an Http Header
+    // const headers = new HttpHeaders({
+    //   'token': '123456789'
+    // })
     return this.http.get<RoomList[]>('api/v1/rooms');
   }
   // Create or send POST request.
