@@ -38,7 +38,9 @@
       -->
       <td>{{ room.rating | number : '1.1-3' : 'en-us' }}</td>
       <td>
-        <button class="btn btn-primary" (click)="selectRoom(room)" >Select</button>
+        <!-- <button class="btn btn-primary" (click)="selectRoom(room)" >Select</button> -->
+        <!-- Now to redirect the use after click the button -->
+        <button class="btn btn-primary" [routerLink]="['/rooms', i]" routerLinkActive="router-link-active"> Book Room</button>
       </td>
     </tr>
   </tbody>

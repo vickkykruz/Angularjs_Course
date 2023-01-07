@@ -1,0 +1,194 @@
+<!-- <p>rooms-add works!</p> -->
+
+<!-- Template Driven Form => Create it -->
+<div class="container">
+  <!-- To bind the intaface model we need ng-model -->
+  <!-- To display if the vaule is bind with the inface model -->
+  {{ rooms | json }}
+
+  <!-- To display wherether there is an error in the form -->
+  {{ roomsForm.valid | json }}
+  <!-- The vaild propert is checkif all the input forms are filled -->
+  {{ roomsForm.pristine | json }}
+  {{ roomsForm.dirty | json }}
+  {{ roomsForm.invalid | json }}
+  {{ roomsForm.value | json }}
+  <!-- The property valid and invalid means that if any of your control is not valid => valid = false and inline = true while vice versar -->
+
+  <!-- Dispay the sccess Message -->
+  <h6 *ngIf="successMessage !== ''" class="text-success">{{ successMessage }}</h6>
+  <!-- To submit form (ngSubmit) and create a function name -->
+  <!-- To get the status of the form wherether it is valid or not, we creat an instance of the form (i.e #name="functionality name") -->
+  <form #roomsForm="ngForm" (ngSubmit)="AddRoom()">
+    <div class="form-group mt-3">
+      <div class="row">
+        <div class="col-lg-3 col-md-3 col-sm-12">
+          <label for="">Room Number</label>
+        </div>
+        <div class="col-lg-9 col-md-9 col-sm-12">
+          <input
+            type="text"
+            name="roomNumber"
+            placeholder="Room Number"
+            [(ngModel)]="rooms.roomNumber"
+            class="form-control"
+            id=""
+            required
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group mt-3">
+      <div class="row">
+        <div class="col-lg-3 col-md-3 col-sm-12">
+          <label for="">Room Type</label>
+        </div>
+        <div class="col-lg-9 col-md-9 col-sm-12">
+          <input
+            type="text"
+            name="roomType"
+            class="form-control"
+            [(ngModel)]="rooms.roomType"
+            id=""
+            placeholder="Room Type"
+            required
+          />
+        </div>
+      </div>
+    </div>
+<!-- How to use minlength and maxlength -->
+<!-- To display the error we instance (ie #roomamenities="ngModel") -->
+    <div class="form-group mt-3">
+      <div class="row">
+        <div class="col-lg-3 col-md-3 col-sm-12">
+          <label for="">Amenities</label>
+        </div>
+        <!-- To validate email 
+        Also we we can vaildate the ptten by appliying
+      pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"-->
+        <div class="col-lg-9 col-md-9 col-sm-12">
+          <input
+            
+            type="text"
+            name="amenities"
+            class="form-control"
+            id=""
+            email
+            minlength="5"
+            maxlength="15"
+            [(ngModel)]="rooms.amenities"
+            placeholder="Amenities"
+            required
+            #roomamenities="ngModel"
+          />
+          <!-- To display the error message for the minlength charat-->
+          <div class="text-danger" *ngIf="roomamenities.errors?.['minlength']">
+            <!-- {{ roomamenities.errors | json }} => to know if it is working-->
+            <h4>Amenities should be min of 5 charts</h4>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="form-group mt-3">
+      <div class="row">
+        <div class="col-lg-3 col-md-3 col-sm-12">
+          <label for="">Price</label>
+        </div>
+        <div class="col-lg-9 col-md-9 col-sm-12">
+          <input
+            type="number"
+            name="price"
+            placeholder="Room price per night"
+            [(ngModel)]="rooms.price"
+            class="form-control"
+            id=""
+            required
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group mt-3">
+      <div class="row">
+        <div class="col-lg-3 col-md-3 col-sm-12">
+          <label for="">Photos</label>
+        </div>
+        <div class="col-lg-9 col-md-9 col-sm-12">
+          <input
+            type="text"
+            name="photos"
+            placeholder="Photos (Provided Link)"
+            class="form-control"
+            [(ngModel)]="rooms.photo"
+            id=""
+            required
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group mt-3">
+      <div class="row">
+        <div class="col-lg-3 col-md-3 col-sm-12">
+          <label for="">Check-In Time</label>
+        </div>
+        <div class="col-lg-9 col-md-9 col-sm-12">
+          <input
+            type="datetime"
+            name="checkinTime"
+            placeholder="Check-in Time"
+            [(ngModel)]="rooms.checkInTime"
+            class="form-control"
+            id=""
+            required
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group mt-3">
+      <div class="row">
+        <div class="col-lg-3 col-md-3 col-sm-12">
+          <label for="">Check-Out Time</label>
+        </div>
+        <div class="col-lg-9 col-md-9 col-sm-12">
+          <input
+            type="text"
+            name="checkoutTime"
+            placeholder="Check-out Time"
+            class="form-control"
+            [(ngModel)]="rooms.checkOutTime"
+            id=""
+            required
+          />
+        </div>
+      </div>
+    </div>
+<!-- The use of min and max for validation -->
+    <div class="form-group mt-3 mb-5">
+      <div class="row">
+        <div class="col-lg-3 col-md-3 col-sm-12">
+          <label for="">Rating</label>
+        </div>
+        <div class="col-lg-9 col-md-9 col-sm-12">
+          <input
+            type="number"
+            name="rating"
+            placeholder="Rating"
+            class="form-control"
+            [(ngModel)]="rooms.rating"
+            id=""
+            min="1"
+            max="5"
+            required
+          />
+        </div>
+      </div>
+    </div>
+    <!-- We want this button to be diabled in case the form is invaild -->
+    <button type="submit" class="btn btn-success btn-block" [disabled]="roomsForm.invalid">Submit</button>
+  </form>
+</div>
