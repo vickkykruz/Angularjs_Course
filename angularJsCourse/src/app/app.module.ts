@@ -3,10 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { RoomsComponent } from './rooms/rooms.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { RoomsListComponent } from './rooms/rooms-list/rooms-list.component';
-import { HeaderComponent } from './header/header.component';
 import { ContainerComponent } from './container/container.component';
 import { EmployeeComponent } from './employee/employee.component';
 import { API_CONFIG, APP_SERVICE_CONFIG } from './ApiConfig/apiconfig.service';
@@ -22,9 +19,13 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { NotfoundComponent } from './notfound/notfound.component';
-import { RoomsBookingComponent } from './rooms-booking/rooms-booking.component';
-import { RoomsAddComponent } from './rooms-add/rooms-add.component';
-import { FormsModule } from '@angular/forms'; // Import the form libary
+import { FormsModule } from '@angular/forms';
+import { LoginComponent } from './login/login.component';
+import { HoverDirective } from './hover.directive';
+import { EmailValidatorDirective } from './email-validator.directive'; // Import the form libary
+import { RoomsModule } from './rooms/rooms.module';
+import { HeaderModule } from './header/header.module';
+import { routeConfig } from './services/routeConfig.service';
 
 // Using App_Initizle
 function initFactory(initService: InitService) {
@@ -33,19 +34,20 @@ function initFactory(initService: InitService) {
 @NgModule({
   declarations: [
     AppComponent,
-    RoomsComponent,
-    RoomsListComponent,
-    HeaderComponent,
     ContainerComponent,
-    EmployeeComponent,
     AppNavComponent,
     NotfoundComponent,
-    RoomsBookingComponent,
-    RoomsAddComponent,
+    LoginComponent,
+    HoverDirective,
+    EmailValidatorDirective,
   ],
   imports: [
     BrowserModule,
     HttpClientModule, // so in setting http it is important to import the HttpClientModule in the app module
+    // Note: In routing always register the feature route module before the App route
+    /* Lazy Loading=> Begin discussed about it on my note. To do this we make Room Module a lazy loader and 
+    we remove the rooms module from this app module. After this go to the app route to config it*/
+    // RoomsModule, // Here we import the room module in the main app module
     AppRoutingModule, //In routing we need to import the route module here
     NgbModule,
     BrowserAnimationsModule,
@@ -55,13 +57,18 @@ function initFactory(initService: InitService) {
     MatSidenavModule,
     MatIconModule,
     MatListModule,
-    FormsModule  // Imprt the forms moduel libary
+    FormsModule,  // Imprt the forms moduel libary
+    HeaderModule
   ],
   providers: [
     // This when we register services manully
     {
       provide: APP_SERVICE_CONFIG, // The service provider in AICOnfig
       useValue: API_CONFIG, // The value
+    },
+    {
+      provide: routeConfig,
+      useValue: {title: 'Home'}
     },
     // Registerthe interceptor
     {

@@ -1,0 +1,95 @@
+<!-- Using Directive with Form -->
+<div class="container">
+  <form action="#">
+    <div class="form-group mt-5">
+      <div class="row">
+        <div class="col-lg-3 col-md-3 col-sm-12">
+          <label for="">Email</label>
+        </div>
+        <div class="col-lg-9 col-md-9 col-sm-12">
+          <!-- To apply the cutome directive using appHover -->
+          <!-- <input type="email" appHover  name="email" class="form-control" id="email" email [(ngModel)]="email" placeholder="Enter Your Email" required> -->
+          <!-- Now using the @Input decorerator to pass in the color if not pass it turns to red -->
+          <!-- <input
+            type="email"
+            appHover
+            color="yellow"
+            name="email"
+            class="form-control"
+            id="email"
+            email
+            [(ngModel)]="email"
+            placeholder="Enter Your Email"
+            required
+          /> -->
+
+          <!-- Assigning the appHover directly -->
+          <!-- appEmailValidator -->
+          <input
+            type="email"
+            appHover="yellow"
+            name="email"
+            appEmailValidator
+            #emailController="ngModel"
+            class="form-control"
+            id="email"
+            email
+            [(ngModel)]="email"
+            placeholder="Enter Your Email"
+            required
+          />
+          <div class="">
+            {{ emailController.errors | json }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group mt-3">
+      <div class="row">
+        <div class="col-lg-3 col-md-3 col-sm-12">
+          <label for="password">Password</label>
+        </div>
+        <div class="col-lg-9 col-md-9 col-sm-12">
+          <!-- <input
+            type="password"
+            appHover
+            name="password"
+            class="form-control"
+            id="password"
+            [(ngModel)]="password"
+            placeholder="Enter Your Password"
+            required
+          /> -->
+          <!-- Same thing -->
+          <!-- <input
+            type="password"
+            appHover
+            color="pink"
+            name="password"
+            class="form-control"
+            id="password"
+            [(ngModel)]="password"
+            placeholder="Enter Your Password"
+            required
+          /> -->
+
+          <!-- Assign the appHover directly -->
+          <input
+            type="password"
+            appHover="pink"
+            name="password"
+            class="form-control"
+            id="password"
+            [(ngModel)]="password"
+            placeholder="Enter Your Password"
+            required
+          />
+        </div>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-success" (click)="login()">
+      SUBMIT
+    </button>
+  </form>
+</div>

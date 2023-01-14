@@ -4,7 +4,7 @@
 <div class="container">
   <!-- To bind the intaface model we need ng-model -->
   <!-- To display if the vaule is bind with the inface model -->
-  {{ rooms | json }}
+  <!-- {{ rooms | json }} -->
 
   <!-- To display wherether there is an error in the form -->
   {{ roomsForm.valid | json }}
@@ -19,7 +19,8 @@
   <h6 *ngIf="successMessage !== ''" class="text-success">{{ successMessage }}</h6>
   <!-- To submit form (ngSubmit) and create a function name -->
   <!-- To get the status of the form wherether it is valid or not, we creat an instance of the form (i.e #name="functionality name") -->
-  <form #roomsForm="ngForm" (ngSubmit)="AddRoom()">
+  <!-- To reset the form after submmtion we pass an arugument to the AddRoom function => AddRoom(roomsForm)  -->
+  <form #roomsForm="ngForm" (ngSubmit)="AddRoom(roomsForm)">
     <div class="form-group mt-3">
       <div class="row">
         <div class="col-lg-3 col-md-3 col-sm-12">
@@ -64,12 +65,12 @@
         <div class="col-lg-3 col-md-3 col-sm-12">
           <label for="">Amenities</label>
         </div>
-        <!-- To validate email 
+        <!-- To validate email
         Also we we can vaildate the ptten by appliying
       pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"-->
         <div class="col-lg-9 col-md-9 col-sm-12">
           <input
-            
+
             type="text"
             name="amenities"
             class="form-control"
@@ -86,6 +87,13 @@
           <div class="text-danger" *ngIf="roomamenities.errors?.['minlength']">
             <!-- {{ roomamenities.errors | json }} => to know if it is working-->
             <h4>Amenities should be min of 5 charts</h4>
+          </div>
+          <!-- How display error using pristine && dirty -->
+          <!-- .dirty => is called when the user click on an input but the input is empty -->
+          <!-- For pristine => (roomamenities.errors?.['required']) will display once the fill is empty
+          : it means fresh state to the component. in order words it mean no one has tourch `the form input -->
+          <div *ngIf="roomamenities.dirty && roomamenities.errors?.['required']">
+            <h4 class="text-danger">Please Provide an Input</h4>
           </div>
         </div>
 

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ConfigService } from '../services/config.service';
 
 @Component({
   selector: 'app-header',
@@ -7,4 +8,7 @@ import { Component } from '@angular/core';
 })
 export class HeaderComponent {
   title: string = 'VickkyKruz Title';
+
+  // This can not craete an instance because it's not a lazy loader
+  constructor(private ConfigServices: ConfigService) {}
 }

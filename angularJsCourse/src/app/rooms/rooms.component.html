@@ -38,6 +38,7 @@
     </div>
 
     <button (click)="addRoom()">Add Item</button>
+    <button [routerLink]="['/rooms/add']" routerLinkActive="router-link-active" >Add Room</button>
 
     <!-- To display the error -->
     <h2>{{ getError$ | async }} <br> <span class="text-right">Number Of Rooms Count: {{ roomsCount$ | async }}</span></h2> 
@@ -56,4 +57,7 @@
 
     <!-- Http Request to diplay the totalbytes of the API -->
     <h1>{{ totalBytes }} loaded</h1>
+
+    <!-- We use where to place this outlet of the nesting route -->
+    <router-outlet></router-outlet>
 </div>

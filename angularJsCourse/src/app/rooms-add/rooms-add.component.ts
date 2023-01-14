@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { RoomList } from '../rooms/rooms';
 import { RoomsService } from '../rooms/services/rooms.service';
 
@@ -18,7 +19,7 @@ export class RoomsAddComponent implements OnInit {
     price: 0,
     checkInTime: new Date(),
     checkOutTime: new Date(),
-    rating: 0,
+    rating: 0
   };
 
   successMessage !: string;
@@ -27,9 +28,22 @@ export class RoomsAddComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  AddRoom() {
+  // So passing NgForm libray to the argument roomsForm
+  AddRoom(roomsForm: NgForm) {
     this.roomService.addRooms(this.rooms).subscribe((rooms)=> {
       this.successMessage = 'Rooms Added Successfully';
+      // roomsForm.reset(); //call the reset method
+      // another way
+      roomsForm.resetForm({
+        roomNumber: '',
+        roomType: '',
+        amenities: '',
+        photo: '',
+        price: 0,
+        checkInTime: new Date(),
+        checkOutTime: new Date(),
+        rating: 0
+      })
     })
   }
 }
