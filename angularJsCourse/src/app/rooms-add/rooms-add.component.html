@@ -7,12 +7,12 @@
   <!-- {{ rooms | json }} -->
 
   <!-- To display wherether there is an error in the form -->
-  {{ roomsForm.valid | json }}
+  <!-- {{ roomsForm.valid | json }} -->
   <!-- The vaild propert is checkif all the input forms are filled -->
-  {{ roomsForm.pristine | json }}
-  {{ roomsForm.dirty | json }}
-  {{ roomsForm.invalid | json }}
-  {{ roomsForm.value | json }}
+  <!-- {{ roomsForm.pristine | json }} -->
+  <!-- {{ roomsForm.dirty | json }} -->
+  <!-- {{ roomsForm.invalid | json }} -->
+  <!-- {{ roomsForm.value | json }} -->
   <!-- The property valid and invalid means that if any of your control is not valid => valid = false and inline = true while vice versar -->
 
   <!-- Dispay the sccess Message -->
@@ -52,6 +52,7 @@
             class="form-control"
             [(ngModel)]="rooms.roomType"
             id=""
+            [ngModelOptions]="{updateOn: 'blur'}"
             placeholder="Room Type"
             required
           />

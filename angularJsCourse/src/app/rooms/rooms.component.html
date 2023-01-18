@@ -16,11 +16,11 @@
 
     <!-- rxjs stream uses of async -->
     <!-- When u want to display stream u use the the async -->
-    {{ rooms$ | async | json }}
+    <!-- {{ rooms$ | async | json }}
     <div class="" [hidden]="hideRoom">
       <h6>Number Of Rooms</h6>
       <div [ngStyle]="{'color': rooms.availableRooms > 0 ? 'green' : 'red'}" [innerText]="numberOfRooms"></div>
-    </div>
+    </div> -->
 
     <!-- Using Directive: Built in -->
     <!-- Type : => Sturcture && Attibute  -->
@@ -33,29 +33,36 @@
       <p>Room List</p>
     </div> -->
 
-    <div class="" *ngIf="selectedRoom">
+    <!-- <div class="" *ngIf="selectedRoom">
       {{ selectedRoom | json}}
-    </div>
+    </div> -->
 
     <button (click)="addRoom()">Add Item</button>
     <button [routerLink]="['/rooms/add']" routerLinkActive="router-link-active" >Add Room</button>
 
     <!-- To display the error -->
-    <h2>{{ getError$ | async }} <br> <span class="text-right">Number Of Rooms Count: {{ roomsCount$ | async }}</span></h2> 
+    <!-- <h2>{{ getError$ | async }} <br> <span class="text-right">Number Of Rooms Count: {{ roomsCount$ | async }}</span></h2>  -->
     <!-- Bisng the Input and Output Function -->
     <!-- <div class="" *ngIf="rooms.availableRooms > 0">
       <app-rooms-list [rooms]="roomList" [title]="title" (selectedRoom)="selectRoom($event)"></app-rooms-list>
     </div> -->
+
+    <!-- Here rending the price Filer -->
+    <div class="">
+      {{ priceFilter |json }}
+      <input type="number" class="form-control" placeholder="price" [formControl]="priceFilter">
+    </div>
     <!-- <div class="" *ngIf="hideRoom"> -->
       <div class="" *ngIf="rooms$ | async as rooms"> 
         <!-- // This is avoid calling muliple stream pipes -->
-      <app-rooms-list [rooms]="rooms" [title]="title" (selectedRoom)="selectRoom($event)"></app-rooms-list>
+        <!-- [price]="priceFilter.value" => custom pipe -->
+      <app-rooms-list [rooms]="rooms"   [title]="title" (selectedRoom)="selectRoom($event)"></app-rooms-list>
     </div>
-    <button (click)="toogle()">Toogle</button>
+    <!-- <button (click)="toogle()">Toogle</button>
     <button (click)="editRoom()">Edit Room</button>
-    <button (click)="deleteRoom()">Delete Room</button>
+    <button (click)="deleteRoom()">Delete Room</button> -->
 
-    <!-- Http Request to diplay the totalbytes of the API -->
+    Http Request to diplay the totalbytes of the API
     <h1>{{ totalBytes }} loaded</h1>
 
     <!-- We use where to place this outlet of the nesting route -->

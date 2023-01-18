@@ -13,7 +13,7 @@ const routes: Routes = [
   // {path: 'rooms', component: RoomsComponent, children: [
     // Place the static route before dynamic route
     {path: 'add', component: RoomsAddComponent},
-    {path: ':id', component: RoomsBookingComponent}
+    // {path: ':id', component: RoomsBookingComponent}
   ]},
   // {path: 'rooms/add', component: RoomsAddComponent},
   // {path: 'rooms/:id', component: RoomsBookingComponent}

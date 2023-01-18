@@ -6,9 +6,10 @@ import { RoomsComponent } from './rooms.component';
 import { RoomsListComponent } from './rooms-list/rooms-list.component';
 import { RoomsBookingComponent } from '../rooms-booking/rooms-booking.component';
 import { RoomsAddComponent } from '../rooms-add/rooms-add.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HeaderModule } from '../header/header.module';
 import { routeConfig } from '../services/routeConfig.service';
+import { FilterPipe } from './filter.pipe';
 
 
 @NgModule({
@@ -16,12 +17,15 @@ import { routeConfig } from '../services/routeConfig.service';
     RoomsComponent,
     RoomsListComponent,
     RoomsBookingComponent,
-    RoomsAddComponent
+    RoomsAddComponent,
+    FilterPipe
   ],
   imports: [
     CommonModule,
     RoomsRoutingModule,
     FormsModule,
+    // We want to add Filter our form but first we import ReactiveFormsModule
+    ReactiveFormsModule,
     HeaderModule
   ],
   providers: [

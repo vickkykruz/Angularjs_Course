@@ -21,6 +21,7 @@
     <!-- [ngClass]="e ? 'even': 'odd'" => Use of Ng-Class -->
     <!-- Splice method limit from 0 to a particular number of record -->
     <!-- | slice : 0:3 -->
+    <!-- | filter: price => custom pipe -->
     <tr   *ngFor="let room of rooms ; let e = even; let o = odd; let i = index">
       <!-- To display percentage value -->
       <td>{{ i | percent}}</td>
@@ -40,7 +41,8 @@
       <td>
         <!-- <button class="btn btn-primary" (click)="selectRoom(room)" >Select</button> -->
         <!-- Now to redirect the use after click the button -->
-        <button class="btn btn-primary" [routerLink]="['/rooms', i]" routerLinkActive="router-link-active"> Book Room</button>
+        <!-- <button class="btn btn-primary" [routerLink]="['/rooms', i]" routerLinkActive="router-link-active"> Book Room</button> -->
+        <button class="btn btn-primary" [routerLink]="['/booking', i]" routerLinkActive="router-link-active"> Book Room</button>
       </td>
     </tr>
   </tbody>

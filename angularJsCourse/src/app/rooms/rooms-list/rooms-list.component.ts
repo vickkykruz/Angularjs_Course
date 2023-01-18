@@ -5,7 +5,7 @@ import { RoomList } from '../rooms';
   selector: 'app-rooms-list',
   templateUrl: './rooms-list.component.html',
   styleUrls: ['./rooms-list.component.sass'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RoomsListComponent implements OnChanges, OnDestroy{
   // Interact with component
@@ -14,6 +14,7 @@ export class RoomsListComponent implements OnChanges, OnDestroy{
   // Because a the stage it asked the data from the parent
   @Input()rooms: RoomList[] | null = [];
 
+  @Input()price = 0;
 
   // Output functions psses data/request from child component to the parent component
   @Output() selectedRoom = new EventEmitter<RoomList>();

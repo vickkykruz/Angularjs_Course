@@ -49,15 +49,25 @@ const routes: Routes = [
 
   // How to do it
   { path: '', redirectTo: '/login', pathMatch: 'full' },
+  // {
+  //   path: 'booking',
+  //   canActivate: [LoginGuard],
+  //   loadChildren: () =>
+  //     import('./rooms-booking/booking/booking.module').then(
+  //       (m) => m.BookingModule
+  //     ),
+  // }, // based on the fact that /rooms is already config up
+
+  // Serior Of Deactivate Rotue
   {
-    path: 'booking',
+    path: 'booking/:roomsid',
     // canActivate: [LoginGuard],
     loadChildren: () =>
       import('./rooms-booking/booking/booking.module').then(
         (m) => m.BookingModule
       ),
-  }, // based on the fact that /rooms is already config up
-
+  },
+  { path: 'comments', loadChildren: () => import('./comment/comment.module').then(m => m.CommentModule) },
   // To create a wild card route => 404 Pages
   { path: '**', component: NotfoundComponent }, // This '**' means that any route that does not match the paths should be cature be it
   // Using this we can generate a 404 page and instan the page inside the redirectTo

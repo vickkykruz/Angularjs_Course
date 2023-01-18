@@ -10,6 +10,7 @@ import {
   ViewChild,
   ViewChildren,
 } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { catchError, map, Observable, of, Subject, Subscription } from 'rxjs';
 import { HeaderComponent } from '../header/header.component';
 import { ConfigService } from '../services/config.service';
@@ -103,10 +104,13 @@ export class RoomsComponent
   );
 
   // How to modify a stream using map operators
-  roomsCount$ = this.roomsService.getRooms$.pipe(
-    // Using map operator
-    map((rooms) => rooms.length)
-  );
+  // roomsCount$ = this.roomsService.getRooms$.pipe(
+  //   // Using map operator
+  //   map((rooms) => rooms.length)
+  // );
+
+  // How to create a form control => (Search)
+    priceFilter = new FormControl(0)
   // Using SkipSelf we're saying that the angular shuld skip check of this RoomService provider
   constructor(
     @SkipSelf() private roomsService: RoomsService,
